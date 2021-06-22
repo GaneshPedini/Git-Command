@@ -1,0 +1,200 @@
+1)To check the git version
+
+git --version
+
+2)setting git / Configuring git account
+
+git config --global user.name
+git config --global user.email
+
+3) To list all configuration values
+
+git config --list
+
+4)initialize a repository from existing code
+
+5)cloning a remote repository
+
+git clone <url> <clone path on local system>
+
+example : git clone https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis.git C:\Technology
+
+6)To view the branch
+
+git branch -a
+
+7) To see see all the files that you made some changes after clone
+
+git status
+
+8) Need to push the changes to staging area before doing commit
+
+ git add <filename>
+ 
+ to add all files  that had changes
+ 
+ git add -A
+ 
+ 9) To restore changes from stage to unstage
+ 
+ git restore --staged <filename>
+ 
+ 10)to see the differce between before and after changes. for this you code should be on working area not in staging, so unstage if you staged already.
+ 
+ git diff
+ 
+ 11)Now to commit the changes locally
+ 
+ git commit -m "The id the second push to github"
+ 
+ 12) After commit locally, we need to push the chage to remote git directory so that other people can see the changes.  But first see if there are any changes already made by anyone else to the original code by pull command first
+ 
+ -> git pull origin master
+ Then use push command to push the changes if you see "Already up to date."
+ 
+ -> git push origin master
+ 
+Braching in git
+----------------
+What we have done above is all in main branch. But on a day to day work it is not a good practice. Hence create a brach for each specific work/function.
+
+13)Creating a branch in git
+
+-> git branch <branch name>
+
+Example : git branch update_readme
+
+14)To list out all branches
+
+-> git branch
+
+  * master
+  update_readme
+  
+ 15) * means, i am currently in master branch. TO move to other branch and work, use checkout command
+ 
+ -> git checkout update_readme
+ Switched to branch 'update_readme'
+ 
+ -> git branch
+ 
+   master
+* update_readme
+
+16) Now lets do some changes using in the code
+
+-> git status
+On branch update_readme
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+-> git add -A
+-> git commit -m "this change using local branch"
+[update_readme 7d87266] this change using local branch
+ 1 file changed, 1 insertion(+) 
+ 
+ 17)After commit push branch to remote
+ 
+ -> git push -u origin update_readme
+
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 329 bytes | 329.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote:
+remote: Create a pull request for 'update_readme' on GitHub by visiting:
+remote:      https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis/pull/new/update_readme
+remote:
+To https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis.git
+ * [new branch]      update_readme -> update_readme
+Branch 'update_readme' set up to track remote branch 'update_readme' from 'origin'.
+
+18) to see all braches both local and remote
+
+-> git branch -a
+
+  master
+* update_readme
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/update_readme
+
+ 19) Why create a branch is to perform your own code, perform unit testing and once everything looks good then merge to master branch.
+ 
+ Lets merge to the master branch
+ 
+-> git checkout master
+
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+before doing any chnages to master, we need to pull and see if the folder is upto date.
+
+-> git pull origin master
+From https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+
+-> git branch --merged
+
+* master
+
+if you see the "update_readme" did not show as it is merged with master
+
+-> git merge update_readme
+
+Updating 8253988..7d87266
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+ 
+Now we merged to master branch, so we can push to remote master.
+
+-> git push origin master
+
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis.git
+   8253988..7d87266  master -> master
+
+Now since the merge is happened, when we run --merged command, we will see both branch.
+-> git branch --merged
+* master
+  update_readme
+
+20) Now as we are done with the branch, we can delete the branch
+
+-> git branch -d update_readme
+
+Deleted branch update_readme (was 7d87266).
+
+-> git branch -a
+
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/update_readme
+
+We have just deleted the branch locally, we still the branch in reomte. so lets delete from remote as well.
+
+-> git push origin --delete update_readme
+
+To https://github.com/GaneshPedini/Python-Dash-Mutual-Fund-Analysis.git
+ - [deleted]         update_readme
+
+-> git branch -a
+
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+
+Now we have deleted from remote as well.
+
+
+ 
+ 
